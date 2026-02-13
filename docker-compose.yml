@@ -14,6 +14,6 @@ services:
         env_file:
             - .env
         volumes:
-            - <persistent-config-path>:/etc/cups
+            - /cups:/etc/cups
         networks:
             - cups_network
