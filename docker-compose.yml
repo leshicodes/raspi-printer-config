@@ -3,17 +3,18 @@ networks:
         driver: host
     
 services:
-    cups:
-        image: anujdatar/cups:26.02.01
-        container_name: cups
-        restart: unless-stopped
-        ports:
-            - "631:631"
-        devices:
-            - /dev/bus/usb:/dev/bus/usb
-        env_file:
-            - .env
-        volumes:
-            - /cups:/etc/cups
-        networks:
-            - cups_network
+  cups:
+    image: anujdatar/cups:26.02.01
+    container_name: cups
+    restart: unless-stopped
+    # Use host networking for mDNS/AirPrint discovery
+    network_mode: "host" 
+    privileged: true
+    # Removed ports: - "631:631" as it's redundant/invalid with host mode
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    env_file:
+      - .env
+    volumes:
+      - /home/jjambrose1s/cups:/etc/cups # Best to use a full path in your home dir
+      - /var/run/dbus:/var/run/dbus    # Helps with printer discovery
