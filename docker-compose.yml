@@ -1,0 +1,19 @@
+networks:
+    cups_network:
+        driver: host
+    
+services:
+    cups:
+        image: anujdatar/cups:26.02.01
+        container_name: cups
+        restart: unless-stopped
+        ports:
+            - "631:631"
+        devices:
+            - /dev/bus/usb:/dev/bus/usb
+        env_file:
+            - .env
+        volumes:
+            - <persistent-config-path>:/etc/cups
+        networks:
+            - cups_network
