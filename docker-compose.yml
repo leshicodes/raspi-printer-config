@@ -4,7 +4,7 @@ networks:
     
 services:
   cups:
-    image: anujdatar/cups:26.02.01
+    build: .
     hostname: cups
     container_name: cups
     restart: unless-stopped
